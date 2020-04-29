@@ -7,20 +7,31 @@
              x:Class="LearningCardsApp.CardPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding FrontText}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand"
-                IsVisible="{Binding IsNotTurned}"
-                />
-            <Label Text="{Binding BackText}"
-                x:Name="BackTextLabel"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" 
-                IsVisible="{Binding IsTurned, Mode=TwoWay}"
-                />
-
-            <Button Text="Turn!"
-                x:Name="TurnButton"
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Left" Command="{Binding SwitchLeftButtonCommand}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand"  
+                    />
+                
+                <Label Text="{Binding FrontText}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand"
+                    IsVisible="{Binding IsNotTurned}"
+                    />
+                <Label Text="{Binding BackText}"
+                    x:Name="BackTextLabel"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" 
+                    IsVisible="{Binding IsTurned}"
+                    />
+                
+                <Button Text="Right" Command="{Binding SwitchRightButtonCommand}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand"  
+                    />
+            </StackLayout>
+            
+            <Button Text="Turn!" Command="{Binding TurnButtonCommand}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand"  
                 />

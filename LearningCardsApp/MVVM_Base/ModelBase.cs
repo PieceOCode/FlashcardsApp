@@ -14,6 +14,7 @@ namespace LearningCardsApp
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
+            Console.WriteLine(propertyName + "Changed!");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 

@@ -23,8 +23,8 @@ namespace LearningCardsApp
 
         private async void  RandomButtonClicked(object sender, EventArgs e)
         {
-            var nextPage = new CardPage();
-            nextPage.BindingContext = new CardModel();
+            CardPageViewModel vm = new CardPageViewModel();
+            var nextPage = new CardPage(vm);
             await Navigation.PushAsync(nextPage, true);
         }
 

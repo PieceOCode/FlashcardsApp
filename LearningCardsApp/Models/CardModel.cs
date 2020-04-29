@@ -4,12 +4,12 @@ using System.Text;
 
 namespace LearningCardsApp
 {
-    class CardModel : ModelBase
+    public class CardModel : ModelBase
     {
         private List<Card> cards;
         private int cardIndex;
         private bool isTurned = false;
-
+       
         public string FrontText
         {
             get => cards[cardIndex].frontText;
@@ -59,7 +59,11 @@ namespace LearningCardsApp
         {
             cards = new List<Card>();
             cardIndex = 0;
-            cards.Add(new Card("Text Front", "TextBack"));
+            cards.Add(new Card("Apple", "Red"));
+            cards.Add(new Card("Strawberry", "Red"));
+            cards.Add(new Card("Banana", "Yellow"));
+
+            cards.Add(new Card("Cucumber", "Green"));
         }
 
         public void AddCard (string frontText, string backText)
@@ -70,8 +74,11 @@ namespace LearningCardsApp
 
         public void SwitchCard(int steps = 1)
         {
+            Console.WriteLine("Switching");
             cardIndex += steps;
             cardIndex %= cards.Count;
+            OnPropertyChanged("FrontText");
+            OnPropertyChanged("BackText");
         } 
     }
 

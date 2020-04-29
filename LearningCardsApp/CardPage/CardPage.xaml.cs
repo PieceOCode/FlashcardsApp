@@ -12,10 +12,12 @@ namespace LearningCardsApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CardPage : ContentPage
     {
-        public CardPage()
+        public CardPage(CardPageViewModel model = null)
         {
             InitializeComponent();
-            TurnButton.Clicked += ButtonClicked;
+
+            BindingContext = model ?? new CardPageViewModel();
+            
         }
 
 
