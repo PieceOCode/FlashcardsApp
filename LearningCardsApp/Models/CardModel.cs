@@ -6,18 +6,18 @@ namespace LearningCardsApp
 {
     class CardModel : ModelBase
     {
-        private string frontText;
-        private string backText;
+        private List<Card> cards;
+        private int cardIndex;
         private bool isTurned = false;
 
         public string FrontText
         {
-            get => frontText;
+            get => cards[cardIndex].frontText;
             set
             {
-                if (value != frontText)
+                if (value != cards[cardIndex].frontText)
                 {
-                    frontText = value;
+                    cards[cardIndex] = new Card(value, cards[cardIndex].backText);
                     OnPropertyChanged();
                 }
             }
@@ -25,12 +25,12 @@ namespace LearningCardsApp
 
         public string BackText
         {
-            get => backText;
+            get => cards[cardIndex].backText;
             set
             {
-                if (value != backText)
+                if (value != cards[cardIndex].backText)
                 {
-                    backText = value;
+                    cards[cardIndex] = new Card(cards[cardIndex].frontText, value);
                     OnPropertyChanged();
                 }
             }
@@ -57,14 +57,33 @@ namespace LearningCardsApp
 
         public CardModel()
         {
-            FrontText = "EmptyFront";
-            BackText = "EmptyBack";
+            cards = new List<Card>();
+            cardIndex = 0;
+            cards.Add(new Card("Text Front", "TextBack"));
         }
 
-        public CardModel(string front, string back)
+        public void AddCard (string frontText, string backText)
         {
-            FrontText = front;
-            BackText = back;
+            Card card = new Card(frontText, backText);
+            cards.Add(card);
+        }
+
+        public void SwitchCard(int steps = 1)
+        {
+            cardIndex += steps;
+            cardIndex %= cards.Count;
+        } 
+    }
+
+    struct Card
+    {
+        public string frontText;
+        public string backText;
+
+        public Card(string front = "Empty Front", string back = "Empty Back") 
+        {
+            frontText = front;
+            backText = back;
         }
     }
 }

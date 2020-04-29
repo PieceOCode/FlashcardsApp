@@ -44,7 +44,6 @@ namespace LearningCardsApp
 
         public static ModelType Load<ModelType>(string fn) where ModelType : ModelBase
         {
-            
             try 
             {
                 //FileStream stream = File.OpenRead(fn)
