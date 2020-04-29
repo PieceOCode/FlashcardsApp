@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="Custom Flashcards"
+             x:Class="LearningCardsApp.MainPage">
+
+    <Grid RowSpacing="10" ColumnSpacing="1" x:Name="OuterGrid">
+        <Grid.Resources>
+            <ResourceDictionary>
+                <Style TargetType="Label">
+                    <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Text="Custom Flashcards" 
+               Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"
+               FontSize="Title" FontFamily="Courier"
+               HorizontalOptions="CenterAndExpand"
+               />
+        <Button Text="Random Cards" 
+                Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                x:Name="RandomButton"
+                />
+
+        <Button Text="All Cards" 
+                Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                x:Name="ViewAllButton"
+                />
+
+    </Grid>
+</ContentPage>
