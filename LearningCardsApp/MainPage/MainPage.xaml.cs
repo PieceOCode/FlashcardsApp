@@ -30,7 +30,9 @@ namespace LearningCardsApp
 
         private async void ViewAllButtonClicked(object sender, EventArgs e)
         {
-            return;
+            //SubjectPageViewModel vm = new SubjectPageViewModel();
+            var nextPage = new SubjectPage();
+            await Navigation.PushAsync(nextPage, true);
         }
     }
 }
