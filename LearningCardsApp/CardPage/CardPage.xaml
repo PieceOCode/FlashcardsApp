@@ -7,10 +7,19 @@
              x:Class="LearningCardsApp.CardPage">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout Orientation="Horizontal">
+            <Label Text="{Binding Category}"
+                   x:Name="CategoryLabel"
+                   VerticalOptions="Center"
+                   HorizontalOptions="CenterAndExpand"
+                   FontSize="Large"
+                   />
+            
+            <StackLayout Orientation="Horizontal"
+                         VerticalOptions="CenterAndExpand"
+                         HorizontalOptions="FillAndExpand">
                 <Button Text="Left" Command="{Binding SwitchLeftButtonCommand}"
-                    VerticalOptions="CenterAndExpand" 
-                    HorizontalOptions="CenterAndExpand"  
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Start"  
                     />
                 
                 <Label Text="{Binding FrontText}"
@@ -26,14 +35,19 @@
                     />
                 
                 <Button Text="Right" Command="{Binding SwitchRightButtonCommand}"
-                    VerticalOptions="CenterAndExpand" 
-                    HorizontalOptions="CenterAndExpand"  
+                    VerticalOptions="Center" 
+                    HorizontalOptions="End"  
                     />
             </StackLayout>
             
             <Button Text="Turn!" Command="{Binding TurnButtonCommand}"
-                VerticalOptions="CenterAndExpand" 
+                VerticalOptions="End" 
                 HorizontalOptions="CenterAndExpand"  
+                />
+
+            <Button Text="Change Category!" Command="{Binding CategoryButtonCommand}"
+                VerticalOptions="End" 
+                HorizontalOptions="CenterAndExpand" 
                 />
         </StackLayout>
     </ContentPage.Content>

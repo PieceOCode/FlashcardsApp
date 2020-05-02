@@ -7,8 +7,10 @@ namespace LearningCardsApp
     public class CardModel : ModelBase
     {
         private List<Card> cards;
+        private Dictionary<string, List<Card>> CardsByCategory;
+        private string currentCategory;
+
         private int cardIndex;
-        private bool isTurned = false;
        
         public string FrontText
         {
@@ -36,53 +38,88 @@ namespace LearningCardsApp
             }
         }
 
-        public bool IsTurned
+        public string CurrentCategory
         {
-            get => isTurned;
+            get => currentCategory;
             set
             {
-                if(value != isTurned)
+                if(value != currentCategory)
                 {
-                    isTurned = value;
-                    OnPropertyChanged("IsTurned");
-                    OnPropertyChanged("IsNotTurned");
+                    currentCategory = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
-        public bool IsNotTurned
-        {
-            get => !isTurned;
-        }
-
         public CardModel()
         {
-            cards = new List<Card>();
-            cardIndex = 0;
-            cards.Add(new Card("Apple", "Red"));
-            cards.Add(new Card("Strawberry", "Red"));
-            cards.Add(new Card("Banana", "Yellow"));
+            CardsByCategory = new Dictionary<string, List<Card>>();
 
-            cards.Add(new Card("Cucumber", "Green"));
+            List<Card> fruits = new List<Card>();
+            fruits.Add(new Card("Apple", "Red"));
+            fruits.Add(new Card("Strawberry", "Red"));
+            fruits.Add(new Card("Banana", "Yellow"));
+            fruits.Add(new Card("Cucumber", "Green"));
+
+            CardsByCategory.Add("Fruit's Colors", fruits);
+
+
+            List<Card> spirits = new List<Card>();
+            spirits.Add(new Card("Bacardi", "Rum"));
+            spirits.Add(new Card("Havana Club", "Rum"));
+            spirits.Add(new Card("Crown Royal", "Whisky"));
+            spirits.Add(new Card("Absolut", "Vodka"));
+
+            CardsByCategory.Add("Spirit Brands", spirits);
+
+            ChangeCategory("Fruit's Colors");
         }
 
-        public void AddCard (string frontText, string backText)
+        public void AddCard (string frontText, string backText, string category)
         {
             Card card = new Card(frontText, backText);
-            cards.Add(card);
+            if(!CardsByCategory.ContainsKey(category)) {
+                AddCategory(category);
+            }
+            CardsByCategory[category].Add(card);
         }
 
         public void SwitchCard(int steps = 1)
         {
             Console.WriteLine("Switching");
             cardIndex += steps;
+            steps %= cards.Count;
+            if (cardIndex < 0) cardIndex += cards.Count;
             cardIndex %= cards.Count;
             OnPropertyChanged("FrontText");
             OnPropertyChanged("BackText");
         } 
+
+        public List<string> GetCategories()
+        {
+            string[] categoryCards = new string[CardsByCategory.Keys.Count];
+            CardsByCategory.Keys.CopyTo(categoryCards, 0);
+            return new List<string>(categoryCards);
+        }
+
+        private void AddCategory(string cat)
+        {
+            CardsByCategory.Add(cat, new List<Card>());
+        }
+
+        public void ChangeCategory (string category)
+        {
+            cards = CardsByCategory[category];
+            CurrentCategory = category;
+            cardIndex = 0;
+
+            OnPropertyChanged("FrontText");
+            OnPropertyChanged("BackText");
+        }
+
     }
 
-    struct Card
+    public struct Card
     {
         public string frontText;
         public string backText;

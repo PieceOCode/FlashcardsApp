@@ -13,6 +13,7 @@ namespace LearningCardsApp
         public ICommand TurnButtonCommand { get; set; }
         public ICommand SwitchLeftButtonCommand { get; set; }
         public ICommand SwitchRightButtonCommand { get; set; }
+        public ICommand CategoryButtonCommand { get; set; }
 
 
         public bool IsTurned
@@ -27,6 +28,11 @@ namespace LearningCardsApp
                     OnPropertyChanged("IsNotTurned");
                 }
             }
+        }
+
+        public string Category
+        {
+            get => Model.CurrentCategory;
         }
 
         public bool IsNotTurned => !isTurned;
@@ -44,25 +50,33 @@ namespace LearningCardsApp
         {
             Model = m ?? new CardModel();
             
-            TurnButtonCommand = new Command(execute: turnPage);
+            TurnButtonCommand = new Command(execute: turnCard);
             SwitchLeftButtonCommand = new Command(execute: switchLeft);
             SwitchRightButtonCommand = new Command(execute: switchRight);
+            CategoryButtonCommand = new Command(execute: changeCategory);
         }
 
         protected override void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Console.WriteLine("Property Changed");
             if(e.PropertyName.Equals(nameof(Model.FrontText)))
             {
-                Console.WriteLine("New Front text");
                 OnPropertyChanged(nameof(FrontText));
             } else if (e.PropertyName.Equals(nameof(Model.BackText)))
             {
                 OnPropertyChanged(nameof(BackText));
+            } else if (e.PropertyName.Equals(nameof(Model.CurrentCategory)))
+            {
+                OnPropertyChanged(nameof(Category));
             }
         }
 
-        void turnPage()
+        void changeCategory()
+        {
+            Model.ChangeCategory(Model.GetCategories()[1]);
+            IsTurned = false;
+        }
+
+        void turnCard()
         {
             Console.WriteLine("Card turned");
             IsTurned = !IsTurned;
@@ -70,10 +84,12 @@ namespace LearningCardsApp
 
         void switchLeft()
         {
+            IsTurned = false;
             Model.SwitchCard(-1);
         }
         void switchRight()
         {
+            IsTurned = false;
             Model.SwitchCard(1);
         }
     }
