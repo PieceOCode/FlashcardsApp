@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="LearningCardsApp.AddCardPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Editor Placeholder="Front of the Card" Text="{Binding FrontText, Mode=TwoWay}"
+                VerticalOptions="FillAndExpand"
+                />
+
+            <Editor Placeholder="Back of the Card" Text="{Binding BackText, Mode=TwoWay}"
+                VerticalOptions="FillAndExpand"
+                />
+            <Picker x:Name="CategoryPicker" ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding Category, Mode=TwoWay}"
+                    />
+
+            <Button Text="Add Card"
+                    Command="{Binding AddCardCommand}"
+                    />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

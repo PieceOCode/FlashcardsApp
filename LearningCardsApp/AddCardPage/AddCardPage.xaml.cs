@@ -10,14 +10,13 @@ using Xamarin.Forms.Xaml;
 namespace LearningCardsApp
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CardPage : ContentPage
+    public partial class AddCardPage : ContentPage
     {
-        public CardPage(CardPageViewModel model = null)
+        public AddCardPage(AddCardPageViewModel model = null)
         {
             InitializeComponent();
 
-            BindingContext = model ?? new CardPageViewModel();
-            
+            BindingContext = model ?? new AddCardPageViewModel();
         }
     }
 }

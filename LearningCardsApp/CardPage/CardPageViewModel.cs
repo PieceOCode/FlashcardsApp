@@ -14,6 +14,9 @@ namespace LearningCardsApp
         public ICommand SwitchLeftButtonCommand { get; set; }
         public ICommand SwitchRightButtonCommand { get; set; }
         public ICommand CategoryButtonCommand { get; set; }
+        public ICommand AddCardButtonCommand { get; set; }
+
+        
 
 
         public bool IsTurned
@@ -54,6 +57,7 @@ namespace LearningCardsApp
             SwitchLeftButtonCommand = new Command(execute: switchLeft);
             SwitchRightButtonCommand = new Command(execute: switchRight);
             CategoryButtonCommand = new Command(execute: changeCategory);
+            AddCardButtonCommand = new Command(execute: NavigateAddCardPage);
         }
 
         protected override void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -68,6 +72,13 @@ namespace LearningCardsApp
             {
                 OnPropertyChanged(nameof(Category));
             }
+        }
+
+        void NavigateAddCardPage()
+        {
+            AddCardPageViewModel vm = new AddCardPageViewModel(Model);
+            ContentPage page = new AddCardPage(vm);
+            Navigation.PushAsync(page, true);
         }
 
         void changeCategory()

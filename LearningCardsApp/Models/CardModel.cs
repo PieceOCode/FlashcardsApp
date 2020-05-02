@@ -82,6 +82,7 @@ namespace LearningCardsApp
                 AddCategory(category);
             }
             CardsByCategory[category].Add(card);
+            ChangeCategory(category);
         }
 
         public void SwitchCard(int steps = 1)
