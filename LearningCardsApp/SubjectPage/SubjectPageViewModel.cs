@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace LearningCardsApp
 {
-    public class SubjectPageViewModel : ViewModelBase
+    public class SubjectPageViewModel : ViewModelBase<CardModel>
     {
-        //**********************  PRIVATE MEMBER VARIABLES *********************
         private List<string> _subjects;
+        protected override void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
 
-        // ***********************  BINDABLE PROPERTIES ************************
-
-        // ItemSource binds to an IEnumerable
+        }
         public List<string> Subjects
         {
             get => _subjects;
@@ -23,19 +26,11 @@ namespace LearningCardsApp
             }
         }
 
-        // ***************************  CONSTRUCTOR ****************************
-        public SubjectPageViewModel(SubjectPage m = null) 
+        public SubjectPageViewModel(CardModel m = null) 
         {
-            Subjects = new List<string>
-            {
-                "Mercury",
-                "Venus",
-                "Jupiter",
-                "Earth",
-                "Mars",
-                "Saturn",
-                "Pluto"
-            };
+            Model = m ?? new CardModel();
+
+            List<string> categories = Model.GetCategories();
         }
     }
 }

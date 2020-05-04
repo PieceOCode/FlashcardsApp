@@ -15,7 +15,7 @@
     </ContentPage.Resources>
 
     <StackLayout>
-        <ListView ItemsSource="{Binding Subjects}"
+        <ListView ItemsSource="{Binding Subjects}" 
                     x:Name="SubjetsListView"
                     HorizontalOptions="Center"
                     VerticalOptions="CenterAndExpand"/>

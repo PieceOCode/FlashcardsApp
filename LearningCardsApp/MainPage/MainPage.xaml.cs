@@ -13,25 +13,28 @@ namespace LearningCardsApp
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        private CardModel theModel;
         public MainPage()
         {
             InitializeComponent();
 
             RandomButton.Clicked += RandomButtonClicked;
             ViewAllButton.Clicked += ViewAllButtonClicked;
+
+            theModel = new CardModel();
         }
 
         private async void  RandomButtonClicked(object sender, EventArgs e)
         {
-            CardPageViewModel vm = new CardPageViewModel();
+            CardPageViewModel vm = new CardPageViewModel(theModel);
             var nextPage = new CardPage(vm);
             await Navigation.PushAsync(nextPage, true);
         }
 
         private async void ViewAllButtonClicked(object sender, EventArgs e)
         {
-            //SubjectPageViewModel vm = new SubjectPageViewModel();
-            var nextPage = new SubjectPage();
+            SubjectPageViewModel vm = new SubjectPageViewModel(theModel);
+            var nextPage = new SubjectPage(vm);
             await Navigation.PushAsync(nextPage, true);
         }
     }
