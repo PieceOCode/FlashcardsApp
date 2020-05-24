@@ -14,7 +14,11 @@ namespace LearningCardsApp
        
         public string FrontText
         {
-            get => cards[cardIndex].frontText;
+            get
+            {
+                if (cardIndex >= cards.Count) return "No cards yet";
+                else return cards[cardIndex].frontText;
+            }
             set
             {
                 if (value != cards[cardIndex].frontText)
@@ -86,9 +90,12 @@ namespace LearningCardsApp
         }
         public void DeleteCard()
         {
-            CardsByCategory[currentCategory].RemoveAt(cardIndex);
-            cards = CardsByCategory[currentCategory];
-            SwitchCard(1);
+            if (cards.Count > 0)
+            {
+                CardsByCategory[currentCategory].RemoveAt(cardIndex);
+                cards = CardsByCategory[currentCategory];
+                SwitchCard(1);
+            }
         }
 
         public void DeleteCategory()
@@ -101,13 +108,16 @@ namespace LearningCardsApp
 
         public void SwitchCard(int steps = 1)
         {
-            Console.WriteLine("Switching");
-            cardIndex += steps;
-            steps %= cards.Count;
-            if (cardIndex < 0) cardIndex += cards.Count;
-            cardIndex %= cards.Count;
-            OnPropertyChanged("FrontText");
-            OnPropertyChanged("BackText");
+            if (cards.Count > 0)
+            {
+                Console.WriteLine("Switching");
+                cardIndex += steps;
+                steps %= cards.Count;
+                if (cardIndex < 0) cardIndex += cards.Count;
+                cardIndex %= cards.Count;
+                OnPropertyChanged("FrontText");
+                OnPropertyChanged("BackText");
+            }
         } 
 
         public List<string> GetCategories()
