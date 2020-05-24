@@ -84,6 +84,20 @@ namespace LearningCardsApp
             CardsByCategory[category].Add(card);
             ChangeCategory(category);
         }
+        public void DeleteCard()
+        {
+            CardsByCategory[currentCategory].RemoveAt(cardIndex);
+            cards = CardsByCategory[currentCategory];
+            SwitchCard(1);
+        }
+
+        public void DeleteCategory()
+        {
+            CardsByCategory.Remove(CurrentCategory);
+            string[] categoryCards = new string[CardsByCategory.Keys.Count];
+            CardsByCategory.Keys.CopyTo(categoryCards, 0);
+            ChangeCategory(categoryCards[0]);
+        }
 
         public void SwitchCard(int steps = 1)
         {
@@ -103,7 +117,7 @@ namespace LearningCardsApp
             return new List<string>(categoryCards);
         }
 
-        private void AddCategory(string cat)
+        public void AddCategory(string cat)
         {
             CardsByCategory.Add(cat, new List<Card>());
         }

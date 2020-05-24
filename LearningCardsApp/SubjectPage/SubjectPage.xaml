@@ -5,7 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="LearningCardsApp.SubjectPage">
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Category" 
+                     Command="{Binding AddCategoryButtonCommand}" 
+                     />
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <Style TargetType="Label">
             <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
