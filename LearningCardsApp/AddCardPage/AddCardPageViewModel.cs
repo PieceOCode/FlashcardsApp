@@ -28,7 +28,7 @@ namespace LearningCardsApp
         }
         public List<string> Categories { get; set; }
 
-        public AddCardPageViewModel(CardModel m = null)
+        public AddCardPageViewModel(CardModel m)
         {
             Model = m;
             

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace LearningCardsApp
@@ -14,18 +17,19 @@ namespace LearningCardsApp
     public partial class MainPage : ContentPage
     {
         private CardModel theModel;
-        public MainPage()
+        public MainPage(CardModel m = null)
         {
             InitializeComponent();
 
             RandomButton.Clicked += RandomButtonClicked;
             ViewAllButton.Clicked += ViewAllButtonClicked;
 
-            theModel = new CardModel();
+            theModel = m;
         }
 
         private async void  RandomButtonClicked(object sender, EventArgs e)
         {
+            theModel.ChangeCategory("Fruit's Colors");
             CardPageViewModel vm = new CardPageViewModel(theModel);
             var nextPage = new CardPage(vm);
             await Navigation.PushAsync(nextPage, true);

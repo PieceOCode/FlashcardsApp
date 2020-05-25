@@ -16,7 +16,7 @@ namespace LearningCardsApp
         {
             InitializeComponent();
 
-            BindingContext = model ?? new AddCardPageViewModel();
+            BindingContext = model;
         }
     }
 }

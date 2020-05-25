@@ -1,20 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
+using System.Xml.Schema;
+using System.Xml;
+using Xamarin.Forms;
+
+using System.IO;
 
 namespace LearningCardsApp
 {
     public class CardModel : ModelBase
     {
+        //Saves the path the model is saved to
+        private string path; 
+
         private List<Card> cards;
         private Dictionary<string, List<Card>> CardsByCategory;
         private string currentCategory;
 
         private int cardIndex;
-       
+
+
+        [XmlIgnore]
         public string FrontText
         {
-            get => cards[cardIndex].frontText;
+            get 
+            {
+                if (cardIndex >= cards.Count) return "No cards yet";
+                else return cards[cardIndex].frontText; 
+            }
             set
             {
                 if (value != cards[cardIndex].frontText)
@@ -25,9 +40,15 @@ namespace LearningCardsApp
             }
         }
 
+
+        [XmlIgnore]
         public string BackText
         {
-            get => cards[cardIndex].backText;
+            get
+            {
+                if (cardIndex >= cards.Count) return "No cards yet";
+                else return cards[cardIndex].backText;
+            }
             set
             {
                 if (value != cards[cardIndex].backText)
@@ -38,6 +59,7 @@ namespace LearningCardsApp
             }
         }
 
+        [XmlIgnore]
         public string CurrentCategory
         {
             get => currentCategory;
@@ -83,11 +105,28 @@ namespace LearningCardsApp
             }
             CardsByCategory[category].Add(card);
             ChangeCategory(category);
+            CustomSave();
+        }
+
+        public void DeleteCard()
+        {
+            CardsByCategory[CurrentCategory].RemoveAt(cardIndex);
+            cards = CardsByCategory[currentCategory];
+            if(cards.Count > 0) SwitchCard(1);
+            CustomSave();
+        }
+
+        public void DeleteCategory()
+        {
+            CardsByCategory.Remove(CurrentCategory);
+            string[] categoryCards = new string[CardsByCategory.Keys.Count];
+            CardsByCategory.Keys.CopyTo(categoryCards, 0);
+            ChangeCategory(categoryCards[0]);
+            CustomSave();
         }
 
         public void SwitchCard(int steps = 1)
         {
-            Console.WriteLine("Switching");
             cardIndex += steps;
             steps %= cards.Count;
             if (cardIndex < 0) cardIndex += cards.Count;
@@ -95,6 +134,11 @@ namespace LearningCardsApp
             OnPropertyChanged("FrontText");
             OnPropertyChanged("BackText");
         } 
+
+        public void ChangeCard ()
+        {
+            CardsByCategory["Fruit's Colors"][0] = new Card("new text", "new Back");
+        }
 
         public List<string> GetCategories()
         {
@@ -106,11 +150,13 @@ namespace LearningCardsApp
         private void AddCategory(string cat)
         {
             CardsByCategory.Add(cat, new List<Card>());
+            CustomSave();
         }
 
         public void ChangeCategory (string category)
         {
             cards = CardsByCategory[category];
+            
             CurrentCategory = category;
             cardIndex = 0;
 
@@ -118,6 +164,58 @@ namespace LearningCardsApp
             OnPropertyChanged("BackText");
         }
 
+        //Had to write our own Serialization because XML somehow does not support serializing dictionaries
+        public void Save(string path)
+        {
+            this.path = path;
+            CustomSave();
+        }
+
+        public void CustomSave()
+        {
+            Console.WriteLine("XML Serialize custom");
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<EntryCustom>));
+            TextWriter writer = new StreamWriter(path);
+
+            List<EntryCustom> entries = new List<EntryCustom>();
+            foreach (string key in CardsByCategory.Keys)
+            {
+                foreach (Card value in CardsByCategory[key])
+                {
+                    entries.Add(new EntryCustom(key, value));
+                }
+            }
+
+            serializer.Serialize(writer, entries);
+            writer.Close();
+        }
+
+        public static CardModel Read(string filename)
+        {
+            try
+            {
+                using (FileStream stream = File.OpenRead(filename))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<EntryCustom>));
+                    List<EntryCustom> list = (List<EntryCustom>)serializer.Deserialize(stream);
+
+                    CardModel c = new CardModel();
+                    c.CardsByCategory.Clear();
+
+                    foreach (EntryCustom entry in list)
+                    {
+                        if (!c.CardsByCategory.ContainsKey(entry.Key))
+                        {
+                            c.CardsByCategory.Add(entry.Key, new List<Card>());
+                        }
+                        c.CardsByCategory[entry.Key].Add(entry.Value);
+                    }
+                    return c;
+                }
+            }
+            catch { return null; }
+        }
     }
 
     public struct Card
@@ -129,6 +227,24 @@ namespace LearningCardsApp
         {
             frontText = front;
             backText = back;
+        }
+    }
+
+    //Custom class to simulate dictionary entry
+    public class EntryCustom
+    {
+        public string Key;
+        public Card Value;
+        public EntryCustom()
+        {
+            Key = "";
+            Value = new Card();
+        }
+
+        public EntryCustom(string key, Card value)
+        {
+            Key = key;
+            Value = value;
         }
     }
 }
