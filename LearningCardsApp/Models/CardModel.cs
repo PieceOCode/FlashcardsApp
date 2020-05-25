@@ -77,24 +77,35 @@ namespace LearningCardsApp
         {
             CardsByCategory = new Dictionary<string, List<Card>>();
 
-            List<Card> fruits = new List<Card>();
-            fruits.Add(new Card("Apple", "Red"));
-            fruits.Add(new Card("Strawberry", "Red"));
-            fruits.Add(new Card("Banana", "Yellow"));
-            fruits.Add(new Card("Cucumber", "Green"));
+            List<Card> characters = new List<Card>();
+            characters.Add(new Card("Raistlin Majere", "The setting of Dragonlance, world of Krynn."));
+            characters.Add(new Card("Strahd von Zarovich", "The setting of Ravenloft, Castle Ravenloft."));
+            characters.Add(new Card("Volothamp Geddarm", "The setting of Forgotten Realms, lives in Waterdeep."));
+            characters.Add(new Card("Melf", "The setting of the World of Greyhawk, elven kingdom of Celene."));
 
-            CardsByCategory.Add("Fruit's Colors", fruits);
+            CardsByCategory.Add("Where Is This Iconic Character From?", characters);
 
 
-            List<Card> spirits = new List<Card>();
-            spirits.Add(new Card("Bacardi", "Rum"));
-            spirits.Add(new Card("Havana Club", "Rum"));
-            spirits.Add(new Card("Crown Royal", "Whisky"));
-            spirits.Add(new Card("Absolut", "Vodka"));
+            List<Card> creatures = new List<Card>();
+            creatures.Add(new Card("Magmin", "Magmins are also known as magmen. They are fire elementals summoned and bound to the Material plane by magic. They crave combustion, and are known for being unpredictibly explosive."));
+            creatures.Add(new Card("Ettin", "Ettins are giants with two heads that are capable of independednt thought and can each control one arm for attacking."));
+            creatures.Add(new Card("Hellfire Engine", "Hellfire engines are enormous living machines used by devils in the Nine Hells. They are designed to mow down large numbers of creatures at a time."));
+            creatures.Add(new Card("Planetar", "Planetars are an order of angels inhabiting the Celestial Planes. They consider themselves defenders of truth and avengers of the fallen righteous. They often serve as messengers of divine beings"));
 
-            CardsByCategory.Add("Spirit Brands", spirits);
+            CardsByCategory.Add("What Is This Creature?", creatures);
 
-            ChangeCategory("Fruit's Colors");
+            List<Card> spells = new List<Card>();
+            spells.Add(new Card("Abjuration", "Abjuration spells consist mainly of protective spells and barriers."));
+            spells.Add(new Card("Evocation", "Evocation spells focus on the manipulation of energry and releasing great destructive forces."));
+            spells.Add(new Card("Transmutation", "Transmutation spells change the properties of creature, objects or conditions."));
+            spells.Add(new Card("Enchantment", "Enchantment spells affect the minds of others, influencing or controlling their behaviour."));
+            spells.Add(new Card("Conjuration", "Conjuration spells manifest creatures, objects or some form of energy to you."));
+            spells.Add(new Card("Illusion", "Illusion spells decieve the senses and minds of others."));
+            spells.Add(new Card("Divination", "Divination spells enable you to gain knowledge and find hidden things."));
+            spells.Add(new Card("Necromancy", "Necromancy spells harness the power of death, using it to cause harm or control the undead."));
+
+            CardsByCategory.Add("Schools of Magic", spells);
+
         }
 
         public void AddCard (string frontText, string backText, string category)

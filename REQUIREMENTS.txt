@@ -1,0 +1,3 @@
+User Interface and Navigation: Level 2:1
+C.R.U.D. and persistence: Level 1st
+Software Architecture: Level 2:1
