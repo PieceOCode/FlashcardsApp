@@ -25,10 +25,10 @@ namespace LearningCardsApp
         [XmlIgnore]
         public string FrontText
         {
-            get 
+            get
             {
                 if (cardIndex >= cards.Count) return "No cards yet";
-                else return cards[cardIndex].frontText; 
+                else return cards[cardIndex].frontText;
             }
             set
             {
@@ -108,14 +108,6 @@ namespace LearningCardsApp
             CustomSave();
         }
 
-        public void DeleteCard()
-        {
-            CardsByCategory[CurrentCategory].RemoveAt(cardIndex);
-            cards = CardsByCategory[currentCategory];
-            if(cards.Count > 0) SwitchCard(1);
-            CustomSave();
-        }
-
         public void DeleteCategory()
         {
             CardsByCategory.Remove(CurrentCategory);
@@ -125,14 +117,30 @@ namespace LearningCardsApp
             CustomSave();
         }
 
+        public void DeleteCard()
+        {
+            if (cards.Count > 0)
+            {
+                CardsByCategory[currentCategory].RemoveAt(cardIndex);
+                cards = CardsByCategory[currentCategory];
+                SwitchCard(1);
+            }
+            CustomSave();
+        }
+        
+
         public void SwitchCard(int steps = 1)
         {
-            cardIndex += steps;
-            steps %= cards.Count;
-            if (cardIndex < 0) cardIndex += cards.Count;
-            cardIndex %= cards.Count;
-            OnPropertyChanged("FrontText");
-            OnPropertyChanged("BackText");
+            if (cards.Count > 0)
+            {
+                Console.WriteLine("Switching");
+                cardIndex += steps;
+                steps %= cards.Count;
+                if (cardIndex < 0) cardIndex += cards.Count;
+                cardIndex %= cards.Count;
+                OnPropertyChanged("FrontText");
+                OnPropertyChanged("BackText");
+            }
         } 
 
         public void ChangeCard ()
@@ -147,7 +155,7 @@ namespace LearningCardsApp
             return new List<string>(categoryCards);
         }
 
-        private void AddCategory(string cat)
+        public void AddCategory(string cat)
         {
             CardsByCategory.Add(cat, new List<Card>());
             CustomSave();

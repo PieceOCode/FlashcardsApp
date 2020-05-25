@@ -13,10 +13,11 @@ namespace LearningCardsApp
         public ICommand TurnButtonCommand { get; set; }
         public ICommand SwitchLeftButtonCommand { get; set; }
         public ICommand SwitchRightButtonCommand { get; set; }
-        public ICommand CategoryButtonCommand { get; set; }
         public ICommand AddCardButtonCommand { get; set; }
+        public ICommand DeleteCardButtonCommand { get; set; }
+        public ICommand DeleteCategoryButtonCommand { get; set; }
 
-        
+
 
 
         public bool IsTurned
@@ -56,8 +57,9 @@ namespace LearningCardsApp
             TurnButtonCommand = new Command(execute: turnCard);
             SwitchLeftButtonCommand = new Command(execute: switchLeft);
             SwitchRightButtonCommand = new Command(execute: switchRight);
-            CategoryButtonCommand = new Command(execute: changeCategory);
             AddCardButtonCommand = new Command(execute: NavigateAddCardPage);
+            DeleteCardButtonCommand = new Command(execute: deleteCard);
+            DeleteCategoryButtonCommand = new Command(execute: deleteCategory);
         }
 
         protected override void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -81,12 +83,6 @@ namespace LearningCardsApp
             Navigation.PushAsync(page, true);
         }
 
-        void changeCategory()
-        {
-            Model.ChangeCategory(Model.GetCategories()[1]);
-            IsTurned = false;
-        }
-
         void turnCard()
         {
             Console.WriteLine("Card turned");
@@ -102,6 +98,14 @@ namespace LearningCardsApp
         {
             IsTurned = false;
             Model.SwitchCard(1);
+        }
+        void deleteCard()
+        {
+            Model.DeleteCard();
+        }
+        void deleteCategory()
+        {
+            Model.DeleteCategory();
         }
     }
 }

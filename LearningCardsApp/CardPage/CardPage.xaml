@@ -10,6 +10,14 @@
         <ToolbarItem Text="Add Card" 
                      Command="{Binding AddCardButtonCommand}" 
                      />
+        <ToolbarItem Text="Delete Card" 
+                     Order="Secondary"
+                     Command="{Binding DeleteCardButtonCommand}" 
+                     />
+        <ToolbarItem Text="Delete Category" 
+                     Order="Secondary"
+                     Command="{Binding DeleteCategoryButtonCommand}" 
+                     />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
@@ -49,11 +57,6 @@
             <Button Text="Turn!" Command="{Binding TurnButtonCommand}"
                 VerticalOptions="End" 
                 HorizontalOptions="CenterAndExpand"  
-                />
-
-            <Button Text="Change Category!" Command="{Binding CategoryButtonCommand}"
-                VerticalOptions="End" 
-                HorizontalOptions="CenterAndExpand" 
                 />
         </StackLayout>
     </ContentPage.Content>

@@ -5,11 +5,14 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace LearningCardsApp
 {
     public class SubjectPageViewModel : ViewModelBase<CardModel>
     {
+        public ICommand AddCategoryButtonCommand { get; set; }
+
         private List<string> _subjects;
         protected override void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -17,7 +20,7 @@ namespace LearningCardsApp
         }
         public List<string> Subjects
         {
-            get => _subjects;
+            get => Model.GetCategories();
             set
             {
                 if (_subjects == value) return;
@@ -30,7 +33,23 @@ namespace LearningCardsApp
         {
             Model = m ?? new CardModel();
 
-            List<string> categories = Model.GetCategories();
+            Subjects = Model.GetCategories();
+
+            AddCategoryButtonCommand = new Command(execute: addCategory);
+        }
+
+        public void NavigateCardPage(int index)
+        {
+            Model.ChangeCategory(Subjects[index]);
+            CardPageViewModel vm = new CardPageViewModel(Model);
+            CardPage page = new CardPage(vm);
+            Navigation.PushAsync(page);
+        }
+        public async void addCategory()
+        {
+            string result = await App.Current.MainPage.DisplayPromptAsync("Category Name:", "");
+            Model.AddCategory(result);
+            OnPropertyChanged("Subjects");
         }
     }
 }
