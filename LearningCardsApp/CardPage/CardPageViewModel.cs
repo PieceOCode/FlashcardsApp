@@ -14,6 +14,7 @@ namespace LearningCardsApp
         public ICommand SwitchLeftButtonCommand { get; set; }
         public ICommand SwitchRightButtonCommand { get; set; }
         public ICommand AddCardButtonCommand { get; set; }
+        public ICommand EditCardButtonCommand { get; set; }
         public ICommand DeleteCardButtonCommand { get; set; }
         public ICommand DeleteCategoryButtonCommand { get; set; }
 
@@ -58,6 +59,7 @@ namespace LearningCardsApp
             SwitchLeftButtonCommand = new Command(execute: switchLeft);
             SwitchRightButtonCommand = new Command(execute: switchRight);
             AddCardButtonCommand = new Command(execute: NavigateAddCardPage);
+            EditCardButtonCommand = new Command(execute: editCard);
             DeleteCardButtonCommand = new Command(execute: deleteCard);
             DeleteCategoryButtonCommand = new Command(execute: deleteCategory);
         }
@@ -99,6 +101,17 @@ namespace LearningCardsApp
             IsTurned = false;
             Model.SwitchCard(1);
         }
+
+        async void editCard()
+        {
+            string newFront = await App.Current.MainPage.DisplayPromptAsync("Front Text:", "Enter a new value for the front of the card:", placeholder: FrontText) ;
+            string newBack = await App.Current.MainPage.DisplayPromptAsync("Back Text:", "Enter a new value for the back of the card", placeholder: BackText);
+            if (newFront != "" && newBack != "")
+            {
+                Model.ChangeCard(newFront, newBack);
+            }
+        }
+
         void deleteCard()
         {
             Model.DeleteCard();

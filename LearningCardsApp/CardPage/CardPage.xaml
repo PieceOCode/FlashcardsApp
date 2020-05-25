@@ -10,6 +10,10 @@
         <ToolbarItem Text="Add Card" 
                      Command="{Binding AddCardButtonCommand}" 
                      />
+        <ToolbarItem Text="Edit Card" 
+                     Order="Secondary"
+                     Command="{Binding EditCardButtonCommand}" 
+                     />
         <ToolbarItem Text="Delete Card" 
                      Order="Secondary"
                      Command="{Binding DeleteCardButtonCommand}" 

@@ -143,9 +143,12 @@ namespace LearningCardsApp
             }
         } 
 
-        public void ChangeCard ()
+        public void ChangeCard (string newFront, string newBack)
         {
-            CardsByCategory["Fruit's Colors"][0] = new Card("new text", "new Back");
+            CardsByCategory["Fruit's Colors"][cardIndex] = new Card(newFront, newBack);
+            OnPropertyChanged("FrontText");
+            OnPropertyChanged("BackText");
+            CustomSave();
         }
 
         public List<string> GetCategories()
