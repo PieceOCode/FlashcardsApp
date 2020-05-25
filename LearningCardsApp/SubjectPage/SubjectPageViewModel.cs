@@ -13,6 +13,7 @@ namespace LearningCardsApp
     {
         public ICommand AddCategoryButtonCommand { get; set; }
 
+
         private List<string> _subjects;
         protected override void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -51,5 +52,6 @@ namespace LearningCardsApp
             Model.AddCategory(result);
             OnPropertyChanged("Subjects");
         }
+
     }
 }

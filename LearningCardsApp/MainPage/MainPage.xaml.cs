@@ -29,7 +29,10 @@ namespace LearningCardsApp
 
         private async void  RandomButtonClicked(object sender, EventArgs e)
         {
-            theModel.ChangeCategory("Fruit's Colors");
+            List<string> cards = theModel.GetCategories();
+            Random rnd = new Random();
+            int r = rnd.Next(cards.Count);
+            theModel.ChangeCategory(cards[r]);
             CardPageViewModel vm = new CardPageViewModel(theModel);
             var nextPage = new CardPage(vm);
             await Navigation.PushAsync(nextPage, true);

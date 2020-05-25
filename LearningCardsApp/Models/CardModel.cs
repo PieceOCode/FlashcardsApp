@@ -164,6 +164,14 @@ namespace LearningCardsApp
             CustomSave();
         }
 
+        public void EditCategory(string cat)
+        {
+            CardsByCategory.Add(cat, CardsByCategory[currentCategory]);
+            CardsByCategory.Remove(currentCategory);
+            ChangeCategory(cat);
+            CustomSave();
+        }
+
         public void ChangeCategory (string category)
         {
             cards = CardsByCategory[category];
@@ -184,8 +192,6 @@ namespace LearningCardsApp
 
         public void CustomSave()
         {
-            Console.WriteLine("XML Serialize custom");
-
             XmlSerializer serializer = new XmlSerializer(typeof(List<EntryCustom>));
             TextWriter writer = new StreamWriter(path);
 

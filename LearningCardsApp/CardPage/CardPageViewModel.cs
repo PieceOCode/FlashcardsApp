@@ -17,7 +17,7 @@ namespace LearningCardsApp
         public ICommand EditCardButtonCommand { get; set; }
         public ICommand DeleteCardButtonCommand { get; set; }
         public ICommand DeleteCategoryButtonCommand { get; set; }
-
+        public ICommand EditCategoryButtonCommand { get; set; }
 
 
 
@@ -62,6 +62,8 @@ namespace LearningCardsApp
             EditCardButtonCommand = new Command(execute: editCard);
             DeleteCardButtonCommand = new Command(execute: deleteCard);
             DeleteCategoryButtonCommand = new Command(execute: deleteCategory);
+            EditCategoryButtonCommand = new Command(execute: editCategory);
+
         }
 
         protected override void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -119,6 +121,12 @@ namespace LearningCardsApp
         void deleteCategory()
         {
             Model.DeleteCategory();
+        }
+        private async void editCategory()
+        {
+            string result = await App.Current.MainPage.DisplayPromptAsync("Category Name:", "");
+            Model.EditCategory(result);
+            OnPropertyChanged("Subjects");
         }
     }
 }

@@ -22,6 +22,10 @@
                      Order="Secondary"
                      Command="{Binding DeleteCategoryButtonCommand}" 
                      />
+        <ToolbarItem Text="Edit Category" 
+                     Order="Secondary"
+                     Command="{Binding EditCategoryButtonCommand}" 
+                     />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
