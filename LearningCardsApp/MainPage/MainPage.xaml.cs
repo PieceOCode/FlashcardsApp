@@ -30,12 +30,18 @@ namespace LearningCardsApp
         private async void  RandomButtonClicked(object sender, EventArgs e)
         {
             List<string> cards = theModel.GetCategories();
-            Random rnd = new Random();
-            int r = rnd.Next(cards.Count);
-            theModel.ChangeCategory(cards[r]);
-            CardPageViewModel vm = new CardPageViewModel(theModel);
-            var nextPage = new CardPage(vm);
-            await Navigation.PushAsync(nextPage, true);
+            if (cards.Count > 0)
+            {
+                Random rnd = new Random();
+                int r = rnd.Next(cards.Count);
+                theModel.ChangeCategory(cards[r]);
+                CardPageViewModel vm = new CardPageViewModel(theModel);
+                var nextPage = new CardPage(vm);
+                await Navigation.PushAsync(nextPage, true);
+            } else
+            {
+                await DisplayAlert("No Categories found.", "There are no existing categories or cards, please create some first by going to ALL CARDS", "OK");
+            }
         }
 
         private async void ViewAllButtonClicked(object sender, EventArgs e)

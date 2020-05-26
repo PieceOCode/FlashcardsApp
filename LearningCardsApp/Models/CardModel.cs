@@ -136,7 +136,8 @@ namespace LearningCardsApp
                 cards = CardsByCategory[currentCategory];
                 SwitchCard(1);
             }
-            CustomSave();
+            OnPropertyChanged("FrontText");
+            OnPropertyChanged("BackText");
         }
         
 
